@@ -66,7 +66,14 @@
 
 import { ChakraProvider, ColorModeScript, Box, Heading, VStack, Input, Textarea, Button, Text } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import BulletinItem from "../page";
+
+type ICreate = {
+  title: string;
+  content: string;
+};
 
 const theme = extendTheme({
   config: {
@@ -75,22 +82,28 @@ const theme = extendTheme({
   },
 });
 
-interface ICreate{
-  title : string;
-  content: string;
-}
 
 export default function CreatePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [bulletins, setBulletins] = useState<ICreate[]>([]);
 
+  const router = useRouter();
+
   const handleCreateBulletin = () => {
     if (title && content) {
       const newBulletin = { title, content };
       setBulletins([...bulletins, newBulletin]);
+
+      console.log(newBulletin);
+      
       setTitle("");
       setContent("");
+    }
+    else if(title == null || content == null) {
+      console.log(title);
+
+      alert("빈곳을 채워주세요.");
     }
   };
 
@@ -98,7 +111,7 @@ export default function CreatePage() {
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Box p={4}>
-        <Heading as="h1" size="3xl" mb={4}>
+        <Heading as="h1" size="2xl" mb={4}>
           게시판 작성
         </Heading>
         <VStack align="start" spacing={4}>
@@ -116,9 +129,6 @@ export default function CreatePage() {
             게시물 작성
           </Button>
         </VStack>
-        <Heading as="h2" size="2xl" mt={8}>
-          작성된 게시물
-        </Heading>
         <VStack align="start" spacing={4}>
           {bulletins.map((bulletin, index) => (
             <BulletinItem key={index} title={bulletin.title} content={bulletin.content} />
@@ -129,13 +139,13 @@ export default function CreatePage() {
   );
 }
 
-function BulletinItem({ title, content } : ICreate) {
-  return (
-    <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="lg" w="100%">
-      <Heading as="h3" size="lg" mb={2}>
-        {title}
-      </Heading>
-      <Text>{content}</Text>
-    </Box>
-  );
-}
+// function BulletinItem({ title, content } : ICreate) {
+//   return (
+//     <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="lg" w="100%">
+//       <Heading as="h3" size="lg" mb={2}>
+//         {title}
+//       </Heading>
+//       <Text>{content}</Text>
+//     </Box>
+//   );
+// }
