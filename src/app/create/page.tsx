@@ -1,67 +1,4 @@
-// 'use client'
 
-// import { useRouter } from "next/navigation";
-// import { useState } from "react";
-
-// // interface Iinput {
-// //     title: string;
-// //     body: string;
-// // }
-
-// export default  function Create() {
-
-//     const router = useRouter();
-
-//     const [title, setTitles] = useState("");
-//     const [body, setBodys] = useState("");
-
-    
-//     const handleSubmit = (e : React.ChangeEvent<HTMLFormElement>) => {
-//         e.preventDefault();
-
-//         const options = {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type' : 'application/json'
-//             },
-//             body: JSON.stringify({title, body})
-//         }
-//         fetch(`http://localhost:9999/topics/`, options)
-//         .then(res => res.json())
-//         .then(result=> {
-//             console.log(result);
-//             const lastId = result.id;
-//             router.push(`/read/${lastId}`);
-//         })
-
-//     }
-
-
-
-//     const handleTitle = (e : React.ChangeEvent<HTMLInputElement>) => {
-//         setTitles(e.target.value)
-//     }
-
-//     const handleBody = (e : React.ChangeEvent<HTMLTextAreaElement>) => {
-//         setBodys(e.target.value);
-//     }
-
-
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//         <p>
-//             <input type="text" placeholder="title"  onChange={handleTitle}/>
-//         </p>
-//         <p>
-//             <textarea name="body" placeholder="body" onChange={handleBody}></textarea>
-//         </p>
-//         <p>
-//             <input type="submit" value="create" />
-//         </p>
-//     </form>
-//   )
-// }
 'use client'
 
 import { ChakraProvider, ColorModeScript, Box, Heading, VStack, Input, Textarea, Button, Text } from "@chakra-ui/react";
@@ -69,7 +6,6 @@ import { extendTheme } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import BulletinItem from "../page";
-
 type ICreate = {
   title: string;
   content: string;
@@ -95,15 +31,6 @@ export default function CreatePage() {
       const newBulletin = { title, content };
       setBulletins([...bulletins, newBulletin]);
 
-      console.log(newBulletin);
-      
-      setTitle("");
-      setContent("");
-    }
-    else if(title == null || content == null) {
-      console.log(title);
-
-      alert("빈곳을 채워주세요.");
     }
   };
 
@@ -138,14 +65,3 @@ export default function CreatePage() {
     </ChakraProvider>
   );
 }
-
-// function BulletinItem({ title, content } : ICreate) {
-//   return (
-//     <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="lg" w="100%">
-//       <Heading as="h3" size="lg" mb={2}>
-//         {title}
-//       </Heading>
-//       <Text>{content}</Text>
-//     </Box>
-//   );
-// }
