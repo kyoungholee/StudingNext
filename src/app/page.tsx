@@ -1,22 +1,23 @@
+import connection from '../../lib/mongodb';
 
 
-// BulletinItem.js
-import { Box, Heading, Text } from "@chakra-ui/react";
-
-type BulletinItemProps = {
-  title: string;
-  content: string;
-};
-
-export default function BulletinItem({ title, content }: BulletinItemProps) {
+export default function Home({ data } : any) {
   return (
-    <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="lg" w="100%">
-      <Heading as="h3" size="lg" mb={2}>
-        감사합니다.
-      </Heading>
-      <Text>{content}</Text>
-    </Box>
+    <div>
+      <h1>Data from MongoDB:</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
   );
 }
 
+export async function getStaticProps() {
+  const db = connection.db.Con('your-database-name');
+  const collection = db.collection('your-collection-name');
+  const data = await collection.find().toArray();
 
+  return {
+    props: {
+      data,
+    },
+  };
+}
